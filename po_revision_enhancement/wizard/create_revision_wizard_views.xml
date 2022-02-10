@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <!-- wizard view -->
+    <record id="create_revision_wizard_view" model="ir.ui.view">
+        <field name="name">description.create.revision.wizard</field>
+        <field name="model">create.revision.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Description Of Change">
+                <group>
+                    <field name="description_of_change"/>
+                </group>
+                <field name="po_lines" widget="one2many">
+                    <tree editable="bottom">
+                        <field name="product_id"/>
+                        <field name="name"/>
+                        <field name="product_qty"/>
+                        <field name="price_unit"/>
+                        <field name="price_subtotal"/>
+                        <field name="order_id" invisible="1"/>
+                    </tree>
+                </field>
+                <footer>
+                    <button string="Update" class="btn-primary" type="object"
+                            name="update_purchase_order"/>
+                    <button string="Cancel" class="btn-secondary"
+                            special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+    <record model="ir.actions.act_window" id="action_create_revision_wizard">
+        <field name="name">Create Revision Action Wizard</field>
+        <field name="res_model">create.revision.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+        <field name="binding_model_id" ref="model_purchase_order"/>
+    </record>
+</odoo>

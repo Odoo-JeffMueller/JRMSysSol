@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="purchase_order_form_inherit_revision_history"
+            model="ir.ui.view">
+        <field name="name">purchase.order.form.revision.history</field>
+        <field name="model">purchase.order</field>
+        <field name="inherit_id" ref="purchase.purchase_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='partner_id']" position="before">
+                <field name="revision_id" readonly="1"/>
+            </xpath>
+            <xpath expr="//header/button[@name='action_view_picking']"
+                   position="after">
+                <button name="%(action_create_revision_wizard)d"
+                        string="Create Revision" class="oe_highlight"
+                        type="action"
+                        attrs="{'invisible': ['|',('state','not in', ('purchase','done')),('invoice_status', '=', 'invoiced')]}"/>
+            </xpath>
+            <xpath expr="//field[@name='partner_id']" position="after">
+                <field name="revised_po"
+                       attrs="{'invisible': [('revised_po', '=', False)]}"/>
+                <field name="po_id"
+                       attrs="{'invisible': [('revised_po', '=', False)]}"/>
+            </xpath>
+             <xpath expr="//field[@name='date_approve']" position="after">
+                <group>
+                    <field name="last_rev_id" invisible="1"/>
+                    <field name="revision_purchase_name" invisible="1"/>
+                    <field name="confirm_po_partner_id" invisible="1"/>
+                </group>
+            </xpath>
+            <xpath expr="//field[@name='order_line']" position="attributes">
+                <attribute name="attrs">{'readonly': [('state', 'in', ('done',
+                    'cancel',
+                    'purchase'))]}
+                </attribute>
+            </xpath>
+            <xpath expr="//notebook" position="inside">
+                <page string="Revision History"
+                      attrs="{'invisible': ['|',('state','not in', ('purchase','done')),('revised_po','=',True)]}" >  
+                    <field name="revision_ids" readonly="1">
+                        <tree>
+                            <field name="revision_level"/>
+                            <field name="desc_of_change"/>
+                            <field name="revision_date"/>
+                            <field name="approval_stamp_id"/>
+                        </tree>
+                        <form>
+                            <group>
+                                <field name="revision_level"/>
+                                <field name="desc_of_change"/>
+                                <field name="revision_date"/>
+                                <field name="approval_stamp_id"/>
+                            </group>
+                        </form>
+                    </field>
+                </page>
+            </xpath>
+        </field>
+    </record>
+</odoo>

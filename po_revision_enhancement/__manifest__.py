@@ -1,0 +1,21 @@
+{
+    "name": "PO Revision Enhancement",
+    "description": "",
+    "category": "Purchase",
+    "summary": "",
+    "version": "15.0.1.0.0",
+    "author": "Aktiv Software",
+    "website": "www.aktivsoftware.com",
+    "depends": ["purchase", "purchase_stock"],
+    "data": [
+        "security/ir.model.access.csv",
+        "wizard/create_revision_wizard_views.xml",
+        "views/purchase_views.xml",
+        "views/revision_views.xml",
+        "report/purchase_order_report.xml",
+        "report/request_for_quotation_report.xml",
+    ],
+    "application": True,
+    "installable": True,
+    "auto_install": False,
+}

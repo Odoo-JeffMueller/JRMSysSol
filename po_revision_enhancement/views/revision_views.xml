@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="revision_history_list_view" model="ir.ui.view">
+        <field name="name">revision.history.list.view</field>
+        <field name="model">revision.history</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="revision_level"/>
+                <field name="desc_of_change"/>
+                <field name="revision_date"/>
+                <field name="approval_stamp_id"/>
+                <field name="revision_purchase_id"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="revision_history_form_view" model="ir.ui.view">
+        <field name="name">revision.history.form.view</field>
+        <field name="model">revision.history</field>
+        <field name="arch" type="xml">
+            <form>
+                <group>
+                    <group>
+                        <field name="revision_level"/>
+                        <field name="desc_of_change"/>
+                        <field name="revision_date"/>
+                        <field name="approval_stamp_id"/>
+                        <field name="revision_purchase_id"/>
+                    </group>
+                </group>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_revision_history" model="ir.actions.act_window">
+        <field name="name">Revision History</field>
+        <field name="res_model">revision.history</field>
+        <field name="view_mode">tree</field>
+    </record>
+
+</odoo>
