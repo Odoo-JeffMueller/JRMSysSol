@@ -32,20 +32,29 @@
 
     <template id="report_footer">
         <div class="footer mb-5">
-            <strong>Purchase Order By:
+            <strong t-if="o.confirm_po_partner_id">Purchase Order By:
                 <span t-field="o.confirm_po_partner_id.name"/>
             </strong>
             <br/>
-            <strong>Date:
+            <strong t-if="o.create_date">Date:
                 <span t-field="o.create_date"/>
             </strong>
+            <br/>
+            <strong t-if="o.picking_type_id.warehouse_id.ap_remit_to">AP Remit To:
+                <span t-field="o.picking_type_id.warehouse_id.ap_remit_to"/>
+            </strong>
             <div t-if="report_type == 'pdf'" class="text-muted float-right mb-3">
-                    Page:
-                    <span class="page"/>
-                    /
-                    <span class="topage"/>
-                </div>
-            <table t-if="o.last_rev_id" class="table table-sm o_main_table">
+                Page:
+                <span class="page"/>
+                /
+                <span class="topage"/>
+            </div>
+        </div>
+    </template>
+
+     <template id="revision_history">
+        <div class="mb-5">
+            <table t-if="o.revision_ids" class="table table-sm o_main_table">
                 <thead>
                     <th name="th_revision_level">
                         <strong>Rev Level</strong>
@@ -61,25 +70,26 @@
                     </th>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td name="td_revision_level">
-                            <span t-field="o.last_rev_id.revision_level"/>
-                        </td>
-                        <td width="350px" name="td_desc_of_change">
-                            <span t-field="o.last_rev_id.desc_of_change"/>
-                        </td>
-                        <td name="td_revision_date">
-                            <span t-field="o.last_rev_id.revision_date"/>
-                        </td>
-                        <td name="td_approval_stamp_id">
-                            <span t-field="o.last_rev_id.approval_stamp_id"/>
-                        </td>
-                    </tr>
+                    <t t-foreach="o.revision_ids" t-as="line">
+                        <tr>
+                            <td name="td_revision_level">
+                                <span t-field="line.revision_level"/>
+                            </td>
+                            <td width="350px" name="td_desc_of_change">
+                                <span t-field="line.desc_of_change"/>
+                            </td>
+                            <td name="td_revision_date">
+                                <span t-field="line.revision_date"/>
+                            </td>
+                            <td name="td_approval_stamp_id">
+                                <span t-field="line.approval_stamp_id"/>
+                            </td>
+                        </tr>
+                    </t>
                 </tbody>
             </table>
         </div>
     </template>
-
 
     <template id="revised_purchaseorder_inherit" inherit_id="purchase.report_purchaseorder_document">
 
@@ -135,8 +145,9 @@
                             <div>
                                 <span t-field="o.picking_type_id.warehouse_id.partner_id.country_id.name" t-if="o.picking_type_id.warehouse_id.partner_id.country_id"/>
                             </div>
-                            <div t-field="o.picking_type_id.warehouse_id.partner_id.phone"/>
-                            <div t-field="o.picking_type_id.warehouse_id.partner_id.email"/>
+                            <div t-field="o.attention"/>
+                            <div t-field="o.attn_phone"/>
+                            <div t-field="o.attn_email"/>
                         </td>
                         <td>
                             <h6>Date of last revision: <span t-field="o.latest_revision_date"/></h6>
@@ -226,6 +237,45 @@
                     </t>
                 </tbody>
             </table>
+        </xpath>
+        <xpath expr="//div[hasclass('page')]" position="after">
+            <p style="page-break-after:always;"> </p>
+            <div class="mb-5">
+                <table t-if="o.revision_ids" class="table table-sm o_main_table">
+                    <thead>
+                        <th name="th_revision_level">
+                            <strong>Rev Level</strong>
+                        </th>
+                        <th width="350px" name="th_rev_desc">
+                            <strong>Description</strong>
+                        </th>
+                        <th name="th_rev_date">
+                            <strong>Date</strong>
+                        </th>
+                        <th name="th_rev_buyer">
+                            <strong>Buyer</strong>
+                        </th>
+                    </thead>
+                    <tbody>
+                        <t t-foreach="o.revision_ids" t-as="line">
+                            <tr>
+                                <td name="td_revision_level">
+                                    <span t-field="line.revision_level"/>
+                                </td>
+                                <td width="350px" name="td_desc_of_change">
+                                    <span t-field="line.desc_of_change"/>
+                                </td>
+                                <td name="td_revision_date">
+                                    <span t-field="line.revision_date"/>
+                                </td>
+                                <td name="td_approval_stamp_id">
+                                    <span t-field="line.approval_stamp_id"/>
+                                </td>
+                            </tr>
+                        </t>
+                    </tbody>
+                </table>
+            </div>
         </xpath>
     </template>
 </odoo>

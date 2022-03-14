@@ -72,8 +72,9 @@
                             <div>
                                 <span t-field="o.picking_type_id.warehouse_id.partner_id.country_id.name" t-if="o.picking_type_id.warehouse_id.partner_id.country_id"/>
                             </div>
-                            <div t-field="o.picking_type_id.warehouse_id.partner_id.phone"/>
-                            <div t-field="o.picking_type_id.warehouse_id.partner_id.email"/>
+                            <div t-field="o.attention"/>
+                            <div t-field="o.attn_phone"/>
+                            <div t-field="o.attn_email"/>
                         </td>
                         <td>
                             <h6>Date of last revision:

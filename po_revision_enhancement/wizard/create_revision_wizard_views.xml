@@ -9,12 +9,13 @@
                 <group>
                     <field name="description_of_change"/>
                 </group>
-                <field name="po_lines" widget="one2many">
+                <field name="po_lines" widget="one2many" >
                     <tree editable="bottom">
+                        <field name="display_type" invisible="1"/>
                         <field name="product_id"/>
-                        <field name="name"/>
-                        <field name="product_qty"/>
-                        <field name="price_unit"/>
+                        <field name="name" attrs="{'readonly': [('display_type', 'in', ['line_section','note'])]}"/>
+                        <field name="product_qty"  attrs="{'readonly': [('display_type', 'in', ['line_section','note'])]}"/>
+                        <field name="price_unit"  attrs="{'readonly': [('display_type', 'in', ['line_section','note'])]}"/>
                         <field name="price_subtotal"/>
                         <field name="order_id" invisible="1"/>
                     </tree>

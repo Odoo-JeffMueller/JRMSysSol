@@ -17,12 +17,17 @@
                         attrs="{'invisible': ['|',('state','not in', ('purchase','done')),('invoice_status', '=', 'invoiced')]}"/>
             </xpath>
             <xpath expr="//field[@name='partner_id']" position="after">
+                <field name="attention"/>
+                <field name="attn_phone"/>
+                <field name="attn_email"/>
+            </xpath>
+            <xpath expr="//field[@name='partner_id']" position="after">
                 <field name="revised_po"
                        attrs="{'invisible': [('revised_po', '=', False)]}"/>
                 <field name="po_id"
                        attrs="{'invisible': [('revised_po', '=', False)]}"/>
             </xpath>
-             <xpath expr="//field[@name='date_approve']" position="after">
+            <xpath expr="//field[@name='date_approve']" position="after">
                 <group>
                     <field name="last_rev_id" invisible="1"/>
                     <field name="revision_purchase_name" invisible="1"/>
