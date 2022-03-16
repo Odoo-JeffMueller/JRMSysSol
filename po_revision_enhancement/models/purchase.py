@@ -47,4 +47,11 @@ class PurchaseOrderLine(models.Model):
 
     order_id = fields.Many2one('purchase.order', default=lambda self: self.env[
         'purchase.order'].browse(self._context.get('active_id')))
+    is_changed = fields.Boolean('Changed', default=False,copy=False)
 
+    @api.depends('product_id','product_qty', 'price_unit')
+    @api.onchange('product_id','product_qty', 'price_unit')
+    def onchange_custom_product_id(self):
+        if self.env.context.get('from_wizard_po_revision'):
+            if self.product_id or self.product_qty or self.price_unit:
+                self.is_changed = True
