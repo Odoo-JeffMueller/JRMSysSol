@@ -16,11 +16,13 @@ class CreateRevisionWizard(models.TransientModel):
 
     description_of_change = fields.Text(string='Description on Revised PO',
                                         required=True)
+    sequence = fields.Integer(string='Sequence', default=10)
     po_id = fields.Many2one("purchase.order",
                             default=lambda self: self.env[
                                 'purchase.order'].browse(
                                 self._context.get('active_id')))
     po_lines = fields.Many2many("purchase.order.line", default=get_po_lines, order='sequence ASC')
+    date_planned = fields.Datetime(string='Delivery Date')
 
     def update_purchase_order(self):
         po = self.env['purchase.order'].browse(self._context.get('active_id'))

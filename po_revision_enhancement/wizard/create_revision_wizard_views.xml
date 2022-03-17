@@ -21,7 +21,8 @@
                             <create name="add_note_control" string="Add a note" context="{'default_display_type': 'line_note'}"/>
                         </control>
                         <field name="display_type" invisible="1"/>
-                         <field
+                        <field name="sequence" widget="handle"/>
+                        <field
                             name="product_id"
                             attrs="{
                                 'required': [('display_type', '=', False)],
@@ -29,6 +30,7 @@
                             context="{ 'quantity':product_qty,'uom':product_uom}"
                             force_save="1" domain="[('purchase_ok', '=', True)]"/>
                         <field name="name" widget="section_and_note_text"/>
+                        <field name="date_planned"/>
                         <field name="product_qty"/>
                         <field name="price_unit" attrs="{'readonly': [('qty_invoiced', '!=', 0)]}"/>
                         <field name="price_subtotal" widget="monetary"/>
